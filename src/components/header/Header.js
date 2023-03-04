@@ -61,11 +61,18 @@ const Header = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setDisplayName(user.displayName);
+        if (user.displayName == null) {
+          const u1 = user.email.split("@")[0];
+          const uName = u1.charAt(0).toUpperCase() + u1.slice(1);
+          setDisplayName(uName);
+        } else {
+          setDisplayName(user.displayName);
+        }
+
         dispatch(
           SET_ACTIVE_USER({
             email: user.email,
-            userName: user.displayName,
+            userName: displayName,
             userID: user.uid,
           })
         );
