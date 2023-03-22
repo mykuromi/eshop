@@ -19,13 +19,24 @@ const AddProduct = () => {
     desc: "",
   });
 
-  const handleInputChange = (e) => {};
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setProduct({
+      ...product,
+      [name]: value,
+    });
+  };
   const handleImageChange = (e) => {};
+
+  const addProduct = (e) => {
+    e.preventDefault();
+    console.log(product);
+  };
 
   return (
     <div className={styles.product}>
       <h1>Add New Product</h1>
-      <form>
+      <form onSubmit={addProduct}>
         <Card cardClass={styles.card}>
           <label>Product Name:</label>
           <input
@@ -40,7 +51,7 @@ const AddProduct = () => {
           <label>Product Image:</label>
           <Card cardClass={styles.group}>
             <div className={styles.progress}>
-              <div className={styles["progress-bar"]} styles={{ width: "50%" }}>
+              <div className={styles["progress-bar"]} style={{ width: "50%" }}>
                 Uploading 50%
               </div>
             </div>
@@ -53,7 +64,8 @@ const AddProduct = () => {
             />
             <input
               type="text"
-              required
+              // required
+              placeholder="Image URL"
               name="imageURL"
               value={product.imageURL}
               disabled
