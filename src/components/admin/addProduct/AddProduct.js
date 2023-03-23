@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Card from "../../card/Card";
 import styles from "./AddProduct.module.scss";
+import { getStorage, ref, uploadBytesResumable } from "firebase/storage";
 
 const AddProduct = () => {
   const categories = [
@@ -13,7 +14,7 @@ const AddProduct = () => {
   const [product, setProduct] = useState({
     name: "",
     imageURL: "",
-    price: "",
+    price: 0,
     category: "",
     brand: "",
     desc: "",
@@ -26,7 +27,13 @@ const AddProduct = () => {
       [name]: value,
     });
   };
-  const handleImageChange = (e) => {};
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+
+    const storage = getStorage();
+    const stroageRef = ref(storage, `eshop/${Date.now()}${file.name}`);
+    const uploadTask = uploadBytesResumable(stroageRef, file);
+  };
 
   const addProduct = (e) => {
     e.preventDefault();
