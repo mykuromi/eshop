@@ -7,7 +7,10 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { SET_ACTIVE_USER } from "../../redux/slice/authSlice";
+import {
+  REMOVE_ACTIVE_USER,
+  SET_ACTIVE_USER,
+} from "../../redux/slice/authSlice";
 import ShowOnLogin, { ShowOnLogout } from "../hiddenLink/hiddenLink";
 import AdminOnlyRoute, {
   AdminOnlyLink,
@@ -55,6 +58,7 @@ const Header = () => {
       .then(() => {
         toast.success("Logout successfully.");
         navigate("/");
+        // logout해서 auth initialize 해주는 코드
       })
       .catch((error) => {
         toast.error(error.message);
@@ -82,6 +86,7 @@ const Header = () => {
         );
       } else {
         setDisplayName("");
+        dispatch(REMOVE_ACTIVE_USER());
       }
     });
   }, [dispatch, displayName]);
