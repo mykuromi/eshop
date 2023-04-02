@@ -1,10 +1,19 @@
-import { collection, query, onSnapshot, orderBy } from "firebase/firestore";
+import {
+  collection,
+  query,
+  onSnapshot,
+  orderBy,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { db } from "../../../firebase/config";
+import { db, storage } from "../../../firebase/config";
 import styles from "./ViewProducts.module.scss";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import Loader from "../../loader/Loader";
+import { deleteObject, ref } from "firebase/storage";
 
 const ViewProducts = () => {
   const [products, setProducts] = useState([]);
@@ -35,8 +44,21 @@ const ViewProducts = () => {
     }
   };
 
+  const deleteProduct = async (id, imageURL) => {
+    try {
+      await deleteDoc(doc(db, "products", id));
+
+      const storageRef = ref(storage, imageURL);
+      await deleteObject(storageRef);
+      toast.success("Product deleted successfully");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <>
+      {isLoading && <Loader />}
       <div className={styles.table}>
         <h2>All Products</h2>
         {products.length === 0 ? (
@@ -69,13 +91,17 @@ const ViewProducts = () => {
                     <td>{name}</td>
                     <td>{category}</td>
                     <td>{`$${price}`}</td>
-                    <td>
+                    <td className={styles.icons}>
                       <Link to="/admin/add-product">
                         <FaEdit size={20} color="green" />
                       </Link>
                       &nbsp;
                       <Link>
-                        <FaTrash size={20} color="red" />
+                        <FaTrash
+                          size={20}
+                          color="red"
+                          onClick={() => deleteProduct(id, imageURL)}
+                        />
                       </Link>
                     </td>
                   </tr>
