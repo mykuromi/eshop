@@ -14,6 +14,7 @@ import styles from "./ViewProducts.module.scss";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import Loader from "../../loader/Loader";
 import { deleteObject, ref } from "firebase/storage";
+import Notiflix from "notiflix";
 
 const ViewProducts = () => {
   const [products, setProducts] = useState([]);
@@ -42,6 +43,28 @@ const ViewProducts = () => {
       setIsLoading(false);
       toast.error(error.message);
     }
+  };
+
+  const confirmDelete = (id, imageURL) => {
+    Notiflix.Confirm.show(
+      "Delete Product",
+      "You are about to delete this product.",
+      "Delete",
+      "Cancel",
+      function okCb() {
+        deleteProduct(id, imageURL);
+      },
+      function cancelCb() {
+        //console.log("Delete canceled.");
+      },
+      {
+        width: "320px",
+        borderRadius: "8px",
+        titleColor: "orangered",
+        okButtonBackground: "orangered",
+        cssAnimationStyle: "zoom",
+      }
+    );
   };
 
   const deleteProduct = async (id, imageURL) => {
@@ -100,7 +123,7 @@ const ViewProducts = () => {
                         <FaTrash
                           size={20}
                           color="red"
-                          onClick={() => deleteProduct(id, imageURL)}
+                          onClick={() => confirmDelete(id, imageURL)}
                         />
                       </Link>
                     </td>
