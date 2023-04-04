@@ -34,7 +34,7 @@ const initialState = {
 
 const AddProduct = () => {
   const { id } = useParams();
-  const { products } = useSelector(selectProducts);
+  const products = useSelector(selectProducts);
   const productEdit = products.find((item) => item.id === id);
 
   const [product, setProduct] = useState(() => {
