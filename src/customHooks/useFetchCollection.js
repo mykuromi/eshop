@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { db } from "../firebase/config";
 import { STORE_PRODUCTS } from "../redux/slice/productSlice";
 
-const useFetchCollection = ({ collectionName }) => {
+const useFetchCollection = (collectionName) => {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
