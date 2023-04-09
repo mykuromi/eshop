@@ -25,7 +25,7 @@ const Product = () => {
           <ProductFilter />
         </aside>
         <div className={styles.content}>
-          <ProductList />
+          <ProductList products={products} />
         </div>
       </div>
     </section>
