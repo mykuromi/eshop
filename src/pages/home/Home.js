@@ -15,14 +15,14 @@ const Home = () => {
       return;
     }
   };
-
+  /*
   useEffect(() => {
     scrollToProducts();
   }, []);
-
+*/
   return (
     <div>
-      <Slider />
+      {/*<Slider />*/}
       <Product />
     </div>
   );
