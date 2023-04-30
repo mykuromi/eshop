@@ -17,10 +17,59 @@ const filterSlice = createSlice({
       );
       state.filteredProducts = tempProducts;
     },
+    SORT_PRODUCTS(state, action) {
+      const { products, sort } = action.payload;
+      let tempProducts = [];
+      switch (sort) {
+        case "lowest-price": {
+          tempProducts = products.slice().sort((a, b) => {
+            return a.price - b.price;
+          });
+          break;
+        }
+        case "highest-price": {
+          tempProducts = products.slice().sort((a, b) => {
+            return b.price - a.price;
+          });
+          break;
+        }
+        case "a-z": {
+          tempProducts = products.slice().sort((a, b) => {
+            return a.name.localeCompare(b.name);
+          });
+          break;
+        }
+        case "z-a": {
+          tempProducts = products.slice().sort((a, b) => {
+            return b.name.localeCompare(a.name);
+          });
+          break;
+        }
+        default: {
+          // latest
+          tempProducts = products;
+          break;
+        }
+      }
+      state.filteredProducts = tempProducts;
+    },
+    FILTER_BY_CATEGORY(state, action) {
+      const { products, category } = action.payload;
+      let tempProducts = [];
+      if (category === "All") {
+        tempProducts = products;
+      } else {
+        tempProducts = products.filter(
+          (product) => product.category === category
+        );
+      }
+      state.filteredProducts = tempProducts;
+    },
   },
 });
 
-export const { FILTER_BY_SEARCH } = filterSlice.actions;
+export const { FILTER_BY_SEARCH, SORT_PRODUCTS, FILTER_BY_CATEGORY } =
+  filterSlice.actions;
 
 export const selectFilteredProducts = (state) => state.filter.filteredProducts;
 
