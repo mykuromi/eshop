@@ -2,10 +2,15 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./ProductFilter.module.scss";
 import { selectProducts } from "../../../redux/slice/productSlice";
 import { useState } from "react";
-import { FILTER_BY_CATEGORY } from "../../../redux/slice/filterSlice";
+import {
+  FILTER_BY_BRAND,
+  FILTER_BY_CATEGORY,
+} from "../../../redux/slice/filterSlice";
+import { useEffect } from "react";
 
 const ProductFilter = () => {
   const [category, setCategory] = useState("All");
+  const [brand, setBrand] = useState("All");
   const products = useSelector(selectProducts);
 
   const dispatch = useDispatch();
@@ -14,6 +19,14 @@ const ProductFilter = () => {
     "All",
     ...new Set(products.map((product) => product.category)),
   ];
+  const allBrands = [
+    "All",
+    ...new Set(products.map((product) => product.brand)),
+  ];
+
+  useEffect(() => {
+    dispatch(FILTER_BY_BRAND({ products, brand }));
+  }, [dispatch, products, brand]);
 
   const filterProducts = (cat) => {
     setCategory(cat);
@@ -39,8 +52,14 @@ const ProductFilter = () => {
       </div>
       <h4>Brand</h4>
       <div className={styles.brand}>
-        <select name="brand">
-          <option value="all">All</option>
+        <select name={brand} onChange={(e) => setBrand(e.target.value)}>
+          {allBrands.map((brand, index) => {
+            return (
+              <option key={index} value={brand}>
+                {brand}
+              </option>
+            );
+          })}
         </select>
       </div>
       <h4>Price</h4>
