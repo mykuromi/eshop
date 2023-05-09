@@ -3,6 +3,7 @@ import styles from "./Cart.module.scss";
 import {
   ADD_TO_CART,
   DECREASE_CART,
+  REMOVE_FROM_CART,
   selectCartItems,
   selectCartTotalAmount,
   selectCartTotalQuantity,
@@ -23,6 +24,9 @@ const Cart = () => {
   };
   const increaseCart = (cart) => {
     dispatch(ADD_TO_CART(cart));
+  };
+  const removeFromCart = (cart) => {
+    dispatch(REMOVE_FROM_CART(cart));
   };
 
   return (
@@ -86,7 +90,11 @@ const Cart = () => {
                       </td>
                       <td>{(price * cartQuantity).toFixed(2)}</td>
                       <td className={styles.icons}>
-                        <FaTrashAlt sixe={19} color="red" />
+                        <FaTrashAlt
+                          sixe={19}
+                          color="red"
+                          onClick={() => removeFromCart(cart)}
+                        />
                       </td>
                     </tr>
                   );
