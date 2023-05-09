@@ -3,6 +3,7 @@ import styles from "./Cart.module.scss";
 import {
   ADD_TO_CART,
   CALCULATE_SUBTOTAL,
+  CALCULATE_TOTAL_QUANTITY,
   CLEAR_CART,
   DECREASE_CART,
   REMOVE_FROM_CART,
@@ -37,6 +38,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(CALCULATE_SUBTOTAL());
+    dispatch(CALCULATE_TOTAL_QUANTITY());
   }, [dispatch, cartItems]);
 
   return (
@@ -121,7 +123,9 @@ const Cart = () => {
                 </div>
                 <br />
                 <Card cardClass={styles.card}>
-                  <p>{`Cart item(s): ${cartTotalQuantity}`}</p>
+                  <p>
+                    <b>{`Cart item(s): ${cartTotalQuantity}`}</b>
+                  </p>
                   <div className={styles.text}>
                     <h4>Subtotal:</h4>
                     <h3>{`$${cartTotalAmount.toFixed(2)}`}</h3>
