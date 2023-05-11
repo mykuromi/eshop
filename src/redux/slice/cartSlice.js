@@ -49,8 +49,8 @@ const cartSlice = createSlice({
         toast.success(`${action.payload.name} removed from the cart`, {
           position: "top-left",
         });
-        localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
       }
+      localStorage.setItem("cartItems", JSON.stringify(state.cartItems));
     },
     REMOVE_FROM_CART(state, action) {
       const newCartItem = state.cartItems.filter(
