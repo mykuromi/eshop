@@ -6,6 +6,7 @@ import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
 import { Home, Contact, Login, Register, Reset, Admin } from "./pages";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
 import Cart from "./pages/cart/Cart";
+import CheckoutDetails from "./pages/checkout/CheckoutDetails";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
 
           <Route path="/product-details/:id" element={<ProductDetails />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/checkout-details" element={<CheckoutDetails />} />
         </Routes>
         <Footer />
       </BrowserRouter>
