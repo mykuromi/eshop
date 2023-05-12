@@ -6,7 +6,7 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   REMOVE_ACTIVE_USER,
   SET_ACTIVE_USER,
@@ -15,6 +15,10 @@ import ShowOnLogin, { ShowOnLogout } from "../hiddenLink/hiddenLink";
 import AdminOnlyRoute, {
   AdminOnlyLink,
 } from "../adminOnlyRoute/AdminOnlyRoute";
+import {
+  CALCULATE_TOTAL_QUANTITY,
+  selectCartTotalQuantity,
+} from "../../redux/slice/cartSlice";
 
 const logo = (
   <div className={styles.logo}>
@@ -26,24 +30,29 @@ const logo = (
   </div>
 );
 
-const cart = (
-  <span className={styles.cart}>
-    <Link to="/cart">
-      Cart
-      <FaShoppingCart size={20} />
-      <p>0</p>
-    </Link>
-  </span>
-);
-
 const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
 const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
   const [displayName, setDisplayName] = useState("");
+  const [scrollPage, setScrollPage] = useState(false);
+
+  const cartTotalQuantity = useSelector(selectCartTotalQuantity);
+  useEffect(() => {
+    dispatch(CALCULATE_TOTAL_QUANTITY());
+  }, []);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const fixNavbar = () => {
+    if (window.scrollY > 50) {
+      setScrollPage(true);
+    } else {
+      setScrollPage(false);
+    }
+  };
+  window.addEventListener("scroll", fixNavbar);
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
@@ -64,6 +73,16 @@ const Header = () => {
         toast.error(error.message);
       });
   };
+
+  const cart = (
+    <span className={styles.cart}>
+      <Link to="/cart">
+        Cart
+        <FaShoppingCart size={20} />
+        <p>{cartTotalQuantity}</p>
+      </Link>
+    </span>
+  );
 
   // Monitor currently sign in user
   useEffect(() => {
@@ -92,7 +111,7 @@ const Header = () => {
   }, [dispatch, displayName]);
 
   return (
-    <header>
+    <header className={scrollPage ? `${styles.fixed}` : null}>
       <div className={styles.header}>
         {logo}
         <nav
