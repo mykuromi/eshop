@@ -16,6 +16,7 @@ import AdminOnlyRoute, {
   AdminOnlyLink,
 } from "../adminOnlyRoute/AdminOnlyRoute";
 import {
+  CALCULATE_SUBTOTAL,
   CALCULATE_TOTAL_QUANTITY,
   selectCartTotalQuantity,
 } from "../../redux/slice/cartSlice";
@@ -39,6 +40,7 @@ const Header = () => {
 
   const cartTotalQuantity = useSelector(selectCartTotalQuantity);
   useEffect(() => {
+    dispatch(CALCULATE_SUBTOTAL());
     dispatch(CALCULATE_TOTAL_QUANTITY());
   }, []);
 

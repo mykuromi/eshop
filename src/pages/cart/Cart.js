@@ -18,8 +18,8 @@ import { useEffect } from "react";
 
 const Cart = () => {
   const cartItems = useSelector(selectCartItems);
-  const cartTotalQuantity = useSelector(selectCartTotalQuantity);
   const cartTotalAmount = useSelector(selectCartTotalAmount);
+  const cartTotalQuantity = useSelector(selectCartTotalQuantity);
 
   const dispatch = useDispatch();
 
