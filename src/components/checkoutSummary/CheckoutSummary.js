@@ -12,7 +12,6 @@ const CheckoutSummary = () => {
   const cartItems = useSelector(selectCartItems);
   const cartTotalAmount = useSelector(selectCartTotalAmount);
   const cartTotalQuantity = useSelector(selectCartTotalQuantity);
-  console.log(cartTotalAmount);
   return (
     <div>
       <h3>Checkout summary</h3>
@@ -32,7 +31,7 @@ const CheckoutSummary = () => {
               </p>
               <div className={styles.text}>
                 <h4>Subtotal:</h4>
-                <h3>{cartTotalAmount.toFixed(2)}</h3>
+                <h3>${cartTotalAmount.toFixed(2)}</h3>
               </div>
               {cartItems.map((item, index) => {
                 const { id, name, price, cartQuantity } = item;

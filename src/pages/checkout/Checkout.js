@@ -37,12 +37,11 @@ const Checkout = () => {
 
   const description = `eShop payment: email: ${customerEmail}, amount: ${totalAmount}`;
   useEffect(() => {
-    // Create PaymentIntent as soon as the page loads
     fetch("http://localhost:4242/create-payment-intent", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        items: cartItems,
+        items: cartItems, // should be ID/quantity from frontend, price from backend
         userEmail: customerEmail,
         shipping: shippingAddress,
         billing: billingAddress,

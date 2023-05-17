@@ -26,10 +26,10 @@ const calculateOrderAmount = (items) => {
   return totatlAmount * 100;
 };
 
+// https://stripe.com/docs/testing
 app.post("/create-payment-intent", async (req, res) => {
   const { items, shipping, description } = req.body;
 
-  // Create a PaymentIntent with the order amount and currency
   const paymentIntent = await stripe.paymentIntents.create({
     amount: calculateOrderAmount(items),
     currency: "usd",
