@@ -23,6 +23,8 @@ const OrderHistory = () => {
     navigate(`/order-details/${id}`);
   };
 
+  const filterOrders = orders.filter((order) => order.userID === userID);
+
   return (
     <section>
       <div className={`container ${styles.order}`}>
@@ -34,7 +36,7 @@ const OrderHistory = () => {
         <>
           {isLoading && <Loader />}
           <div className={styles.table}>
-            {orders.length === 0 ? (
+            {filterOrders.length === 0 ? (
               <p>No orders found.</p>
             ) : (
               <table>
@@ -48,7 +50,7 @@ const OrderHistory = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {orders.map((order, index) => {
+                  {filterOrders.map((order, index) => {
                     const {
                       id,
                       orderDate,
