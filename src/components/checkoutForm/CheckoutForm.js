@@ -2,21 +2,40 @@ import styles from "./CheckoutForm.module.scss";
 import spinnerImg from "../../assets/spinner.jpg";
 import React, { useEffect, useState } from "react";
 import {
-  PaymentElement,
   useStripe,
   useElements,
+  PaymentElement,
 } from "@stripe/react-stripe-js";
 import Card from "../card/Card";
 import CheckoutSummary from "../checkoutSummary/CheckoutSummary";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { Timestamp, addDoc, collection } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import { useDispatch, useSelector } from "react-redux";
+import { selectEmail, selectUserID } from "../../redux/slice/authSlice";
+import {
+  CLEAR_CART,
+  selectCartItems,
+  selectCartTotalAmount,
+} from "../../redux/slice/cartSlice";
+import { selectShippingAddress } from "../../redux/slice/checkoutSlice";
 
 const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [email, setEmail] = useState("");
   const [message, setMessage] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const userID = useSelector(selectUserID);
+  const userEmail = useSelector(selectEmail);
+  const cartItems = useSelector(selectCartItems);
+  const cartTotalAmount = useSelector(selectCartTotalAmount);
+  const shippingAddress = useSelector(selectShippingAddress);
 
   useEffect(() => {
     if (!stripe) {
@@ -33,7 +52,29 @@ const CheckoutForm = () => {
   }, [stripe]);
 
   const saveOrder = () => {
-    console.log("Order saved.");
+    const today = new Date();
+    const date = today.toDateString();
+    const time = today.toLocaleTimeString();
+    const orderConfig = {
+      userID,
+      userEmail,
+      orderDate: date,
+      orderTime: time,
+      orderAmount: cartTotalAmount,
+      orderStatus: "Order Placed...",
+      cartItems,
+      shippingAddress,
+      createdAt: Timestamp.now().toDate(),
+    };
+
+    try {
+      addDoc(collection(db, "orders"), orderConfig);
+      dispatch(CLEAR_CART());
+      toast.success("Order saved.");
+      navigate("/checkout-success");
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -103,7 +144,6 @@ const CheckoutForm = () => {
                     )}
                   </span>
                 </button>
-                {/* Show any error or success messages */}
                 {message && <div id={styles["payment-message"]}>{message}</div>}
               </Card>
             </div>
