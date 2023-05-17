@@ -15,6 +15,7 @@ import {
   CheckoutDetails,
   CheckoutSuccess,
   OrderHistory,
+  OrderDetails,
 } from "./pages";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
 
@@ -46,6 +47,7 @@ function App() {
           <Route path="/checkout-details" element={<CheckoutDetails />} />
           <Route path="/checkout-success" element={<CheckoutSuccess />} />
           <Route path="/order-history" element={<OrderHistory />} />
+          <Route path="/order-details/:id" element={<OrderDetails />} />
         </Routes>
         <Footer />
       </BrowserRouter>
