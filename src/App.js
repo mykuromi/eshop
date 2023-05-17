@@ -1,13 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Header, Footer } from "./components";
 import AdminOnlyRoute from "./components/adminOnlyRoute/AdminOnlyRoute";
-import { Home, Contact, Login, Register, Reset, Admin } from "./pages";
+import {
+  Home,
+  Contact,
+  Login,
+  Register,
+  Reset,
+  Admin,
+  Cart,
+  Checkout,
+  CheckoutDetails,
+  CheckoutSuccess,
+} from "./pages";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
-import Cart from "./pages/cart/Cart";
-import CheckoutDetails from "./pages/checkout/CheckoutDetails";
-import Checkout from "./pages/checkout/Checkout";
 
 function App() {
   return (
@@ -35,6 +43,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
           <Route path="/checkout-details" element={<CheckoutDetails />} />
+          <Route path="/checkout-success" element={<CheckoutSuccess />} />
         </Routes>
         <Footer />
       </BrowserRouter>
