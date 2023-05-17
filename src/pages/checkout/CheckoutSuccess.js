@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import styles from "./CheckoutSuccess.module.scss";
 
 const CheckoutSuccess = () => {
   return (
