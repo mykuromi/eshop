@@ -50,7 +50,7 @@ const ChangeOrderStatus = ({ order, id }) => {
           <form onSubmit={(e) => editOrder(e, id)}>
             <span>
               <select name={status} onChange={(e) => setStatus(e.target.value)}>
-                <option value="" disabled>
+                <option value="" disabled selected>
                   -- Choose one--
                 </option>
                 <option value="Order placed...">Order placed...</option>

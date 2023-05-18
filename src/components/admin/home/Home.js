@@ -16,6 +16,7 @@ import {
 } from "../../../redux/slice/orderSlice";
 import useFetchCollection from "../../../customHooks/useFetchCollection";
 import { useEffect } from "react";
+import Chart from "../../chart/Chart";
 
 const earningIcon = <AiFillDollarCircle size={30} color="#b624ff" />;
 const productIcon = <BsCart4 size={30} color="#1f93ff" />;
@@ -63,6 +64,9 @@ const Home = () => {
           count={orders.length}
           icon={orderIcon}
         />
+      </div>
+      <div>
+        <Chart />
       </div>
     </div>
   );
