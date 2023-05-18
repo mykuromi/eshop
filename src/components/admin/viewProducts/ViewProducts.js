@@ -1,11 +1,4 @@
-import {
-  collection,
-  query,
-  onSnapshot,
-  orderBy,
-  deleteDoc,
-  doc,
-} from "firebase/firestore";
+import { deleteDoc, doc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -21,10 +14,18 @@ import {
   STORE_PRODUCTS,
 } from "../../../redux/slice/productSlice";
 import useFetchCollection from "../../../customHooks/useFetchCollection";
+import Search from "../../search/Search";
+import {
+  FILTER_BY_SEARCH,
+  selectFilteredProducts,
+} from "../../../redux/slice/filterSlice";
 
 const ViewProducts = () => {
+  const [search, setSearch] = useState("");
   const { data, isLoading } = useFetchCollection("products");
   const products = useSelector(selectProducts);
+  const filteredProducts = useSelector(selectFilteredProducts);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,6 +35,10 @@ const ViewProducts = () => {
       })
     );
   }, [dispatch, data]);
+
+  useEffect(() => {
+    dispatch(FILTER_BY_SEARCH({ products, search }));
+  }, [dispatch, products, search]);
 
   const confirmDelete = (id, imageURL) => {
     Notiflix.Confirm.show(
@@ -74,7 +79,13 @@ const ViewProducts = () => {
       {isLoading && <Loader />}
       <div className={styles.table}>
         <h2>All Products</h2>
-        {products.length === 0 ? (
+        <div className={styles.search}>
+          <p>
+            <b>{filteredProducts.length}</b> products found
+          </p>
+          <Search value={search} onChange={(e) => setSearch(e.target.value)} />
+        </div>
+        {filteredProducts.length === 0 ? (
           <p>No product fonund.</p>
         ) : (
           <table>
@@ -89,7 +100,7 @@ const ViewProducts = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product, index) => {
+              {filteredProducts.map((product, index) => {
                 const { id, name, price, imageURL, category } = product;
                 return (
                   <tr key={id}>
