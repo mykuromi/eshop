@@ -16,6 +16,7 @@ import {
   CheckoutSuccess,
   OrderHistory,
   OrderDetails,
+  NotFound,
 } from "./pages";
 import ProductDetails from "./components/product/productDetails/ProductDetails";
 import ReviewProducts from "./components/reviewProducts/ReviewProducts";
@@ -50,6 +51,7 @@ function App() {
           <Route path="/order-history" element={<OrderHistory />} />
           <Route path="/order-details/:id" element={<OrderDetails />} />
           <Route path="/review-product/:id" element={<ReviewProducts />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />
       </BrowserRouter>

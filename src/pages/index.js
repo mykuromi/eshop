@@ -12,3 +12,4 @@ export { default as CheckoutDetails } from "./checkout/CheckoutDetails";
 export { default as CheckoutSuccess } from "./checkout/CheckoutSuccess";
 export { default as OrderDetails } from "./orderDetails/OrderDetails";
 export { default as OrderHistory } from "./orderHistory/OrderHistory";
+export { default as NotFound } from "./notFound/NotFound";
