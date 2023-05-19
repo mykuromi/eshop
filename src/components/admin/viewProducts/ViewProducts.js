@@ -28,7 +28,7 @@ const ViewProducts = () => {
   const filteredProducts = useSelector(selectFilteredProducts);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage, setProductsPerPage] = useState(10);
+  const [productsPerPage] = useState(10);
 
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;

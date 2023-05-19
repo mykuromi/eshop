@@ -35,7 +35,6 @@ const Login = () => {
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
         setIsLoading(false);
         toast.success("Loagin Successful...");
         redirectUser();
@@ -50,7 +49,6 @@ const Login = () => {
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider)
       .then((result) => {
-        const user = result.user;
         toast.success("Login Succesfully");
         redirectUser();
       })

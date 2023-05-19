@@ -10,7 +10,7 @@ const Pagination = ({
   const pageNumbers = [];
   const totalPages = totalProducts / productsPerPage;
 
-  const [pageNumberLimit, setPageNumberlimit] = useState(5);
+  const [pageNumberLimit] = useState(5);
   const [minPageNumberLimit, setMinPageNumberlimit] = useState(0);
   const [maxPageNumberLimit, setMaxPageNumberlimit] = useState(5);
 

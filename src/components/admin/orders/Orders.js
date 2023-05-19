@@ -3,7 +3,6 @@ import useFetchCollection from "../../../customHooks/useFetchCollection";
 import styles from "./Orders.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { selectUserID } from "../../../redux/slice/authSlice";
 import {
   STORE_ORDERS,
   selectorderHistory,
@@ -13,7 +12,6 @@ import Loader from "../../loader/Loader";
 const Orders = () => {
   const { data, isLoading } = useFetchCollection("orders");
   const orders = useSelector(selectorderHistory);
-  const userID = useSelector(selectUserID);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
