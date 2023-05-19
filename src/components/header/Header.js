@@ -12,9 +12,7 @@ import {
   SET_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
 import ShowOnLogin, { ShowOnLogout } from "../hiddenLink/hiddenLink";
-import AdminOnlyRoute, {
-  AdminOnlyLink,
-} from "../adminOnlyRoute/AdminOnlyRoute";
+import { AdminOnlyLink } from "../adminOnlyRoute/AdminOnlyRoute";
 import {
   CALCULATE_SUBTOTAL,
   CALCULATE_TOTAL_QUANTITY,
@@ -39,13 +37,13 @@ const Header = () => {
   const [scrollPage, setScrollPage] = useState(false);
 
   const cartTotalQuantity = useSelector(selectCartTotalQuantity);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(CALCULATE_SUBTOTAL());
     dispatch(CALCULATE_TOTAL_QUANTITY());
-  }, []);
-
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  }, [dispatch]);
 
   const fixNavbar = () => {
     if (window.scrollY > 50) {

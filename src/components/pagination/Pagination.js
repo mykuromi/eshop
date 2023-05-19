@@ -20,7 +20,7 @@ const Pagination = ({
 
   const paginatePrev = () => {
     setCurrentPage(currentPage - 1);
-    if ((currentPage - 1) % pageNumberLimit == 0) {
+    if ((currentPage - 1) % pageNumberLimit === 0) {
       setMinPageNumberlimit(minPageNumberLimit - pageNumberLimit);
       setMaxPageNumberlimit(maxPageNumberLimit - pageNumberLimit);
     }

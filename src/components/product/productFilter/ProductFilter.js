@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./ProductFilter.module.scss";
 import {
-  GET_PRICE_RANGE,
   selectMaxPrice,
   selectMinPrice,
   selectProducts,
